@@ -6,7 +6,7 @@ CFLAGS	= 	-Wall -O2
 
 all	:	$(TARGET)
 
-main.o	:	main.c
+main.o	:	main.c Header.h
 		$(CC) -c main.c $(CFLAGS)
 
 $(TARGET):	main.o
