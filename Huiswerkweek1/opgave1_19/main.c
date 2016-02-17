@@ -9,5 +9,5 @@ void main() {
 
 void swap(char * p) {
 	char temp[(sizeof(p)/sizeof(char))];
-
+	printf("%s", *(p+=1));
 }
