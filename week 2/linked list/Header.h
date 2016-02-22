@@ -19,3 +19,11 @@ typedef struct List{
 
 void llist_clear(List *list);
 List *List_create();
+void llist_show(List *list);
+int llist_excist(List *list, void *item);
+void llist_remove(List *list, ListNode node);
+void llist_add(List *list, void *value);
+void List_remove(List *list, ListNode *node);
+void llist_clear(List *list);
+int llist_nrItems(List *list);
+List llist_create();

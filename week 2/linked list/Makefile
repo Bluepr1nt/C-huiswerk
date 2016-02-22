@@ -1,12 +1,17 @@
-CC	= 	gcc
+# Voorbeeld Makefile
+#
+# @ Diederich Kroeske, 2011
+#
+
+CC	=	gcc
 #CC	= 	avr-gcc
 
-TARGET	=	llist	
-CFLAGS	= 	-Wall -O2
+TARGET	=	llexample
+CFLAGS	=	-Wall
 
 all	:	$(TARGET)
 
-main.o	:	main.c Header.h
+main.o	:	main.c header.h
 		$(CC) -c main.c $(CFLAGS)
 
 $(TARGET):	main.o

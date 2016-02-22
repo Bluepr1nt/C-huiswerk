@@ -1,9 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-include "Header.h"
+#include "stdlib.h"
+#include "stdio.h"
+#include "header.h"
 
-void main(){
-	
+void main(void){
+	List list = llist_create();
+	llist_add(list, "hallo\0");
+	llist_add(list, 341);
+	llist_add(list, "doei\0");
+	printf(llist_nrItems(list));
+	llist_show(list);
+	llist_remove(list, 341);
+	llist_show(list);
+	llist_clear(list);
 }
 
 List *List_create(){
@@ -25,8 +33,21 @@ int llist_excist(List *list, void *item){
 	}
 }
 
-void llist_remove(){
-	
+void llist_remove(List *list, ListNode node){
+	LIST_FOREACH(list, first, next, cur){
+		if(cur == node){
+			List_remove(list, node);
+		}
+	}
+}
+
+List llist_create(){
+	List *l = List_create();
+	if(l == NULL){
+		printf("Derp");
+	} else{
+		return l;
+	}
 }
 
 void llist_add(List *list, void *value){
@@ -47,7 +68,7 @@ void llist_add(List *list, void *value){
 	error: return;
 }
 
-void *List_remove(List *list, ListNode *node){
+void List_remove(List *list, ListNode *node){
 	void *result = NULL;
 	check(list->first && list->last, "List is empty");
 	check(node, "Node can't be NULL");
