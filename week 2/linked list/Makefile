@@ -15,7 +15,7 @@ all	:	$(TARGET)
 main.o	:	main.c header.h
 		$(CC) -c main.c $(CFLAGS)
 
-$(TARGET):	main.o
+$(TARGET)	:	main.o
 		$(CC) main.o $(CFLAGS) -o $(TARGET)
 
 clean	:
