@@ -1,0 +1,248 @@
+GAS LISTING C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s 			page 1
+
+
+   1               		.file	"main.c"
+   2               		.arch atmega2561
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.data
+  11               	.LC0:
+  12 0000 7700      		.string	"w"
+  13               	.LC1:
+  14 0002 7561 7274 		.string	"uart0"
+  14      3000 
+  15               	.LC2:
+  16 0008 0A4E 7574 		.string	"\nNut/OS Dynamic Server Threads Demo"
+  16      2F4F 5320 
+  16      4479 6E61 
+  16      6D69 6320 
+  16      5365 7276 
+  17               	.LC3:
+  18 002c 5265 6769 		.string	"Registering eth0 failed."
+  18      7374 6572 
+  18      696E 6720 
+  18      6574 6830 
+  18      2066 6169 
+  19               	.LC4:
+  20 0045 6574 6830 		.string	"eth0"
+  20      00
+  21               	.LC5:
+  22 004a 436F 6E66 		.string	"Configuring eth0 failed."
+  22      6967 7572 
+  22      696E 6720 
+  22      6574 6830 
+  22      2066 6169 
+  23               	.LC6:
+  24 0063 4E65 7477 		.string	"Network configured. Listening on IP %s, port 23."
+  24      6F72 6B20 
+  24      636F 6E66 
+  24      6967 7572 
+  24      6564 2E20 
+  25               	.LC7:
+  26 0094 7465 6C6E 		.string	"telnetd"
+  26      6574 6400 
+  27               		.text
+  28               	.global	NutAppMain
+  29               		.type	NutAppMain, @function
+  30               	NutAppMain:
+  31               	/* prologue: frame size=4 */
+  32 0000 CF93      		push r28
+  33 0002 DF93      		push r29
+  34 0004 CDB7      		in r28,__SP_L__
+  35 0006 DEB7      		in r29,__SP_H__
+  36 0008 2497      		sbiw r28,4
+  37 000a 0FB6      		in __tmp_reg__,__SREG__
+  38 000c F894      		cli
+GAS LISTING C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s 			page 2
+
+
+  39 000e DEBF      		out __SP_H__,r29
+  40 0010 0FBE      		out __SREG__,__tmp_reg__
+  41 0012 CDBF      		out __SP_L__,r28
+  42               	/* prologue end (size=10) */
+  43 0014 80E0      		ldi r24,lo8(115200)
+  44 0016 92EC      		ldi r25,hi8(115200)
+  45 0018 A1E0      		ldi r26,hlo8(115200)
+  46 001a B0E0      		ldi r27,hhi8(115200)
+  47 001c 8983      		std Y+1,r24
+  48 001e 9A83      		std Y+2,r25
+  49 0020 AB83      		std Y+3,r26
+  50 0022 BC83      		std Y+4,r27
+  51 0024 40E0      		ldi r20,lo8(0)
+  52 0026 60E0      		ldi r22,lo8(0)
+  53 0028 70E0      		ldi r23,hi8(0)
+  54 002a 80E0      		ldi r24,lo8(devDebug0)
+  55 002c 90E0      		ldi r25,hi8(devDebug0)
+  56 002e 0E94 0000 		call NutRegisterDevice
+  57 0032 4091 0000 		lds r20,__iob+2
+  58 0036 5091 0000 		lds r21,(__iob+2)+1
+  59 003a 60E0      		ldi r22,lo8(.LC0)
+  60 003c 70E0      		ldi r23,hi8(.LC0)
+  61 003e 80E0      		ldi r24,lo8(.LC1)
+  62 0040 90E0      		ldi r25,hi8(.LC1)
+  63 0042 0E94 0000 		call freopen
+  64 0046 8091 0000 		lds r24,__iob+2
+  65 004a 9091 0000 		lds r25,(__iob+2)+1
+  66 004e 0E94 0000 		call _fileno
+  67 0052 AE01      		movw r20,r28
+  68 0054 4F5F      		subi r20,lo8(-(1))
+  69 0056 5F4F      		sbci r21,hi8(-(1))
+  70 0058 61E0      		ldi r22,lo8(257)
+  71 005a 71E0      		ldi r23,hi8(257)
+  72 005c 0E94 0000 		call _ioctl
+  73 0060 80E0      		ldi r24,lo8(.LC2)
+  74 0062 90E0      		ldi r25,hi8(.LC2)
+  75 0064 0E94 0000 		call puts
+  76 0068 40E0      		ldi r20,lo8(0)
+  77 006a 60E0      		ldi r22,lo8(0)
+  78 006c 70E0      		ldi r23,hi8(0)
+  79 006e 80E0      		ldi r24,lo8(devEth0)
+  80 0070 90E0      		ldi r25,hi8(devEth0)
+  81 0072 0E94 0000 		call NutRegisterDevice
+  82 0076 892B      		or r24,r25
+  83 0078 01F0      		breq .L2
+  84 007a 80E0      		ldi r24,lo8(.LC3)
+  85 007c 90E0      		ldi r25,hi8(.LC3)
+  86 007e 00C0      		rjmp .L8
+  87               	.L2:
+  88 0080 20E0      		ldi r18,lo8(0)
+  89 0082 30E0      		ldi r19,hi8(0)
+  90 0084 40E0      		ldi r20,hlo8(0)
+  91 0086 50E0      		ldi r21,hhi8(0)
+  92 0088 60E0      		ldi r22,lo8(0)
+  93 008a 70E0      		ldi r23,hi8(0)
+  94 008c 80E0      		ldi r24,lo8(.LC4)
+  95 008e 90E0      		ldi r25,hi8(.LC4)
+GAS LISTING C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s 			page 3
+
+
+  96 0090 0E94 0000 		call NutDhcpIfConfig
+  97 0094 892B      		or r24,r25
+  98 0096 01F0      		breq .L4
+  99 0098 80E0      		ldi r24,lo8(.LC5)
+ 100 009a 90E0      		ldi r25,hi8(.LC5)
+ 101               	.L8:
+ 102 009c 0E94 0000 		call puts
+ 103               	.L4:
+ 104 00a0 6091 0000 		lds r22,confnet+16
+ 105 00a4 7091 0000 		lds r23,(confnet+16)+1
+ 106 00a8 8091 0000 		lds r24,(confnet+16)+2
+ 107 00ac 9091 0000 		lds r25,(confnet+16)+3
+ 108 00b0 0E94 0000 		call inet_ntoa
+ 109 00b4 9F93      		push r25
+ 110 00b6 8F93      		push r24
+ 111 00b8 80E0      		ldi r24,lo8(.LC6)
+ 112 00ba 90E0      		ldi r25,hi8(.LC6)
+ 113 00bc 9F93      		push r25
+ 114 00be 8F93      		push r24
+ 115 00c0 0E94 0000 		call printf
+ 116 00c4 20E0      		ldi r18,lo8(512)
+ 117 00c6 32E0      		ldi r19,hi8(512)
+ 118 00c8 40E0      		ldi r20,lo8(0)
+ 119 00ca 50E0      		ldi r21,hi8(0)
+ 120 00cc 60E0      		ldi r22,lo8(gs(TelnetThread))
+ 121 00ce 70E0      		ldi r23,hi8(gs(TelnetThread))
+ 122 00d0 80E0      		ldi r24,lo8(.LC7)
+ 123 00d2 90E0      		ldi r25,hi8(.LC7)
+ 124 00d4 0E94 0000 		call NutThreadCreate
+ 125 00d8 0F90      		pop __tmp_reg__
+ 126 00da 0F90      		pop __tmp_reg__
+ 127 00dc 0F90      		pop __tmp_reg__
+ 128 00de 0F90      		pop __tmp_reg__
+ 129               	.L6:
+ 130 00e0 0E94 0000 		call NutThreadYield
+ 131 00e4 00C0      		rjmp .L6
+ 132               	/* epilogue: frame size=4 */
+ 133               	/* epilogue: noreturn */
+ 134               	/* epilogue end (size=0) */
+ 135               	/* function NutAppMain size 115 (105) */
+ 136               		.size	NutAppMain, .-NutAppMain
+ 137               		.data
+ 138               	.LC8:
+ 139 009c 4865 6C6C 		.ascii	"Hello us"
+ 139      6F20 7573 
+ 140 00a4 6572 2120 		.string	"er! If this wasn't just an example you could now enter commands!"
+ 140      4966 2074 
+ 140      6869 7320 
+ 140      7761 736E 
+ 140      2774 206A 
+ 141               		.text
+ 142               	.global	TelnetThread
+ 143               		.type	TelnetThread, @function
+ 144               	TelnetThread:
+ 145               	/* prologue: frame size=0 */
+ 146               	/* prologue end (size=0) */
+ 147 00e6 0E94 0000 		call NutTcpCreateSocket
+GAS LISTING C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s 			page 4
+
+
+ 148 00ea 8C01      		movw r16,r24
+ 149 00ec 67E1      		ldi r22,lo8(23)
+ 150 00ee 70E0      		ldi r23,hi8(23)
+ 151 00f0 0E94 0000 		call NutTcpAccept
+ 152 00f4 20E0      		ldi r18,lo8(512)
+ 153 00f6 32E0      		ldi r19,hi8(512)
+ 154 00f8 40E0      		ldi r20,lo8(0)
+ 155 00fa 50E0      		ldi r21,hi8(0)
+ 156 00fc 60E0      		ldi r22,lo8(gs(TelnetThread))
+ 157 00fe 70E0      		ldi r23,hi8(gs(TelnetThread))
+ 158 0100 80E0      		ldi r24,lo8(.LC7)
+ 159 0102 90E0      		ldi r25,hi8(.LC7)
+ 160 0104 0E94 0000 		call NutThreadCreate
+ 161 0108 48E4      		ldi r20,lo8(72)
+ 162 010a 50E0      		ldi r21,hi8(72)
+ 163 010c 60E0      		ldi r22,lo8(.LC8)
+ 164 010e 70E0      		ldi r23,hi8(.LC8)
+ 165 0110 C801      		movw r24,r16
+ 166 0112 0E94 0000 		call NutTcpSend
+ 167 0116 C801      		movw r24,r16
+ 168 0118 0E94 0000 		call NutTcpCloseSocket
+ 169 011c 0E94 0000 		call NutThreadExit
+ 170               	.L10:
+ 171 0120 00C0      		rjmp .L10
+ 172               	/* epilogue: frame size=0 */
+ 173               	/* epilogue: noreturn */
+ 174               	/* epilogue end (size=0) */
+ 175               	/* function TelnetThread size 30 (30) */
+ 176               		.size	TelnetThread, .-TelnetThread
+ 177               	/* File "main.c": code  145 = 0x0091 ( 135), prologues  10, epilogues   0 */
+GAS LISTING C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s:3      *ABS*:0000003f __SREG__
+C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s:4      *ABS*:0000003e __SP_H__
+C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s:5      *ABS*:0000003d __SP_L__
+C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s:30     .text:00000000 NutAppMain
+C:\Users\jeroe\AppData\Local\Temp/cczjvKaq.s:144    .text:000000e6 TelnetThread
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+devDebug0
+NutRegisterDevice
+__iob
+freopen
+_fileno
+_ioctl
+puts
+devEth0
+NutDhcpIfConfig
+confnet
+inet_ntoa
+printf
+NutThreadCreate
+NutThreadYield
+NutTcpCreateSocket
+NutTcpAccept
+NutTcpSend
+NutTcpCloseSocket
+NutThreadExit
